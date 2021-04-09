@@ -1,0 +1,59 @@
+package com.mathapi.controller;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.mathapi.entity.Fibonacci;
+import com.mathapi.entity.Power;
+import com.mathapi.entity.SquareRoot;
+
+@RestController
+public class MathController {
+	
+	@GetMapping(path = "/math-api/operations")//<operation-name>? number=15)
+	public List<String> getOperations() {
+		 List<String> list = new ArrayList<>();
+		    list.add("squared-root");
+		    list.add("power");
+		    list.add("euler");
+		    list.add("fibonacci");
+		    list.add("randomnumbers");
+		    list.add("prime");
+		    list.add("division");
+		    list.add("binary");
+		return list;
+	}
+	
+	@GetMapping(path = "/math-api/operations/squared-root",
+	produces = MediaType.APPLICATION_JSON_VALUE)
+	public SquareRoot getsquaredRoot(@RequestParam(name="number") double number) {
+		double result =Math.sqrt(number);
+	return new SquareRoot(number,result);
+	}
+	
+	@GetMapping(path = "/math-api/operations/power",
+	produces = MediaType.APPLICATION_XML_VALUE)
+	public Power getPower(@RequestParam(name="number1") double number1, @RequestParam(name="number2") double number2) {
+		double result = Math.pow(number1, number2);
+	return new Power(number1, number2, result);
+	}
+	@GetMapping(path = "/math-api/operations/euler",
+	produces = MediaType.APPLICATION_JSON_VALUE)
+	public SquareRoot getEuler(@RequestParam(name="power") double power) {
+		double result =Math.exp(power);
+	return new SquareRoot(power,result);
+	}
+	@GetMapping(path = "/math-api/operations/euler",
+	produces = MediaType.TEXT_HTML_VALUE)
+	public Fibonacci getFibonacci(@RequestParam(name="number") int number) {
+		Fibonacci fibonacci;
+			Object[] result = fibonacci.fibonacci(number);
+	return new Fibonacci(number,result);
+			}
+	
+}

@@ -1,0 +1,44 @@
+package com.mathapi;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.mathapi.entity.SquareRoot;
+
+@RestController
+public class MathController {
+	
+	@GetMapping(path = "/math-api/operations")//<operation-name>? number=15)
+	public List<String> getOperations() {
+		 List<String> list = new ArrayList<>();
+		    list.add("squared-root");
+		    list.add("power");
+		    list.add("euler");
+		    list.add("fibonacci");
+		    list.add("randomnumbers");
+		    list.add("prime");
+		    list.add("division");
+		    list.add("binary");
+		return list;
+	}
+	
+	@GetMapping(path = "/math-api/operations/squared-root",
+	produces = MediaType.APPLICATION_JSON_VALUE)
+	public SquareRoot getsquaredRoot(@RequestParam(name="number", required=false, defaultValue="null")  double number) {
+		 double result =Math.sqrt(number);
+		return new SquareRoot(number,result);
+	}
+	
+	@GetMapping(path = "/math-api/operations/power",
+			produces = MediaType.APPLICATION_JSON_VALUE)
+			public Double getPower(@RequestParam(name="number")  double number) {
+			 return Math.pow(number,2);
+			}
+
+}

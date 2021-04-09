@@ -1,0 +1,32 @@
+package com.mathapi.entity;
+
+public class Binary {
+	private int decimal;
+	private int binary;
+	public Binary() {
+		super();
+	}
+	public Binary(int decimal, int binary) {
+		super();
+		this.decimal = decimal;
+		this.binary = binary;
+	}
+	public int getDecimal() {
+		return decimal;
+	}
+	public void setDecimal(int decimal) {
+		this.decimal = decimal;
+	}
+	public int getBinary() {
+		return binary;
+	}
+	public void setBinary(int binary) {
+		this.binary = binary;
+	}
+	@Override
+	public String toString() {
+		return "Binary [decimal=" + decimal + ", binary=" + binary + "]";
+	}
+	
+	
+}

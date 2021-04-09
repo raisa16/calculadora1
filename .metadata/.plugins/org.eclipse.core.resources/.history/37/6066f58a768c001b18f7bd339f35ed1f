@@ -1,0 +1,75 @@
+package com.mathapi.controller;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.mathapi.entity.Fibonacci;
+import com.mathapi.entity.Power;
+import com.mathapi.entity.SquareRoot;
+
+@RestController
+@RequestMapping("math-api/operations")
+public class MathController {
+	
+	@GetMapping(path = "/")//<operation-name>? number=15)
+	public List<String> getOperations() {
+		 List<String> list = new ArrayList<>();
+		    list.add("squared-root");
+		    list.add("power");
+		    list.add("euler");
+		    list.add("fibonacci");
+		    list.add("randomnumbers");
+		    list.add("prime");
+		    list.add("division");
+		    list.add("binary");
+		return list;
+	}
+	
+	@GetMapping(path = "/squared-root",
+	produces = MediaType.APPLICATION_JSON_VALUE)
+	public SquareRoot getsquaredRoot(@RequestParam(name="number") double number) {
+		double result =Math.sqrt(number);
+	return new SquareRoot(number,result);
+	}
+	
+	@GetMapping(path = "/math-api/operations/power",
+	produces = MediaType.APPLICATION_XML_VALUE)
+	public Power getPower(@RequestParam(name="number1") double number1, @RequestParam(name="number2") double number2) {
+		double result = Math.pow(number1, number2);
+	return new Power(number1, number2, result);
+	}
+	@GetMapping(path = "/math-api/operations/euler",
+	produces = MediaType.APPLICATION_JSON_VALUE)
+	public SquareRoot getEuler(@RequestParam(name="power") double power) {
+		double result =Math.exp(power);
+	return new SquareRoot(power,result);
+	}
+	@GetMapping(path = "/math-api/operations/fibonacci",
+	produces = MediaType.TEXT_HTML_VALUE)
+	@ResponseBody
+	public String getFibonacci(@RequestParam(name="number") Integer number) {
+		int n1=0,n2=1,n3=0,i;    
+		 System.out.print(n1+" "+n2);//printing 0 and 1    
+		 List<Integer> list = new ArrayList<>();
+		 list.add(n1);
+		 list.add(n2);
+		 for(i=2;i<number;++i)//loop starts from 2 because 0 and 1 are already printed    
+		 {  
+		  n3=n1+n2;
+		  System.out.print(" ");
+		  System.out.print(n3);
+		  list.add(n3);
+		  n1=n2;    
+		  n2=n3;    
+		 }    
+	return new Fibonacci(number, list).toString();
+			}
+	
+}
